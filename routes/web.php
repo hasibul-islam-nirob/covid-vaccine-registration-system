@@ -16,7 +16,7 @@ use App\Http\Controllers\RegistrationController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages.index');
 });
 
 
@@ -25,4 +25,4 @@ Route::post('/registerr', [RegistrationController::class, 'store'])->name('regis
 Route::get('/register/success', [RegistrationController::class, 'success'])->name('registration.success');
 
 Route::get('/search', [SearchController::class, 'index'])->name('search.index');
-Route::get('/search/result', [SearchController::class, 'search'])->name('search.result');
+Route::get('/search_result', [SearchController::class, 'search']);

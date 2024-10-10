@@ -17,17 +17,21 @@ class SearchController extends Controller
     public function search(Request $request){
         
         $nid = $request->input('nid');
+        $status = "";
+        $scheduledDate = "";
 
         $user = User::where('nid', $nid)->first();
         if (!$user) {
             $status = 'Not registered';
-            return view('search.result', compact('status'));
+            return view('search.index', compact('status','scheduledDate','nid'));
+
         }
 
         $registration = $user->registration;
         if (!$registration) {
             $status = 'Not registered';
-            return view('search.result', compact('status'));
+            return view('search.index', compact('status','scheduledDate','nid'));
+
         }
 
         $status = $registration->status;
@@ -40,12 +44,21 @@ class SearchController extends Controller
                 $registration->update(['status' => 'Vaccinated']);
             }
 
-            return view('search.result', compact('status', 'scheduledDate'));
+            $status = 'Scheduled';
+            $scheduledDate = $scheduledDate;
+            return view('search.index', compact('status','scheduledDate','nid'));
+
+
         } elseif ($status == 'Not scheduled') {
-            return view('search.result', compact('status'));
+            $status = 'Not scheduled';
+            return view('search.index', compact('status','scheduledDate','nid'));
+
         } elseif ($status == 'Vaccinated') {
-            return view('search.result', compact('status'));
+            $status = 'Vaccinated';
+            return view('search.index', compact('status','scheduledDate','nid'));
+
         }
+
     }
 
 }

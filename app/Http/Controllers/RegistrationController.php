@@ -26,21 +26,34 @@ class RegistrationController extends Controller
             'vaccine_center_id' => 'required|exists:vaccine_centers,id',
         ]);
 
-        
-        $user = User::create([
-            'nid' => $request->nid,
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-        ]);
-
-        Registration::create([
-            'user_id' => $user->id,
-            'vaccine_center_id' => $request->vaccine_center_id,
-        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
         
-        return redirect()->route('registration.success');
+        DB::beginTransaction();
+        try {
+
+            $user = User::create([
+                'nid' => $request->nid,
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+            ]);
+    
+            Registration::create([
+                'user_id' => $user->id,
+                'vaccine_center_id' => $request->vaccine_center_id,
+            ]);
+            DB::commit();
+
+            return redirect()->back()->with('success', 'Registration successfully.');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->withErrors(['error' => 'An error occurred: ' . $e->getMessage()]);
+        }
+        
     }
 
     public function success(){
