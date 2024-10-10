@@ -1,2 +1,1 @@
-# covid-vaccine-registration-system
- 
+# COVID vaccine registration system
