@@ -23,7 +23,7 @@ class VaccineCenterSeeder extends Seeder
             ['name' => 'Center 7', 'daily_limit' => 20],
             ['name' => 'Center 8', 'daily_limit' => 70],
             ['name' => 'Center 9', 'daily_limit' => 30],
-            ['name' => 'Center 10', 'daily_limit' => 50],
+            ['name' => 'Center 10', 'daily_limit' => 50]
         ];
 
         foreach ($centers as $center) {
