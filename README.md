@@ -2,6 +2,19 @@
 
 
 
+```
+git clone https://github.com/hasibul-islam-nirob/covid-vaccine-registration-system
+cd covid-vaccine-registration
+cp .env.example .env
+
+'Added database into .env' example DB_DATABASE=covid_vaccine_registration_system
+
+composer install
+npm install
+php artisan migrate --seed
+php artisan serve
+```
+
 
 
 ### Performance Optimization
